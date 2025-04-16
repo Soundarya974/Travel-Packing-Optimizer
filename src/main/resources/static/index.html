@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Packing Optimizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <h1>Travel Packing Optimizer</h1>
+
+    <label>
+        Max Weight:
+        <input id="maxWeight" type="number" value="7">
+    </label>
+
+    <div id="items"></div>
+
+    <button onclick="fetchDefaults()">Load Default Items</button>
+    <button onclick="addItem()">Add Item</button>
+    <button onclick="submitData()">Optimize</button>
+
+
+    <h2>Result</h2>
+    <div id="output-container">
+        <table id="output-table" style="display: none;">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Weight (kg)</th>
+                <th>Value</th>
+                <th>Fragile</th>
+            </tr>
+            </thead>
+            <tbody id="output-body"></tbody>
+        </table>
+        <div id="summary" style="margin-top: 1rem;"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+
+</html>

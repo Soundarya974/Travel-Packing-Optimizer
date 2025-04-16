@@ -1,0 +1,7 @@
+[
+  { "name": "T-Shirt", "weight": 1.0, "value": 5.0, "fragile": false },
+  { "name": "Jeans", "weight": 2.0, "value": 8.0, "fragile": false },
+  { "name": "Laptop", "weight": 3.0, "value": 15.0, "fragile": true },
+  { "name": "Toiletries", "weight": 0.5, "value": 3.0, "fragile": false },
+  { "name": "Camera", "weight": 1.5, "value": 10.0, "fragile": true }
+]

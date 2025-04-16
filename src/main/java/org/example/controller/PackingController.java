@@ -1,12 +1,16 @@
 package org.example.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.model.TravelInput;
 import org.example.model.TravelItem;
 
 import org.example.service.PackingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,5 +23,18 @@ public class PackingController {
 
     @PostMapping
     public Map<String, List<TravelItem>> optimize(@RequestBody TravelInput input) {
-        return service.optimizePacking(input.getItems(), input.getMaxWeight());}
+        return service.optimizePacking(input.getItems(), input.getMaxWeight());
+    }
+
+    @GetMapping("/defaults")
+    public List<TravelItem> getDefaultItems() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ClassPathResource resource = new ClassPathResource("data/default-items.json");
+
+        return mapper.readValue(resource.getInputStream(), new TypeReference<>() {
+
+        });
+    }
+
+
 }

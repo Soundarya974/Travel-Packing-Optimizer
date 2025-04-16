@@ -1,9 +1,5 @@
 package org.example.service;
 
-
-
-
-
 import org.example.model.TravelItem;
 import org.example.solver.GreedySolver;
 import org.example.solver.KnapsackSolver;
