@@ -6,6 +6,7 @@ import org.example.model.TravelInput;
 import org.example.model.TravelItem;
 
 import org.example.service.PackingService;
+import org.example.service.TravelItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
@@ -19,21 +20,20 @@ import java.util.Map;
 public class PackingController {
 
     @Autowired
-    private PackingService service;
+    private PackingService packingService;
+
+    @Autowired
+    private TravelItemService travelItemService;
 
     @PostMapping
     public Map<String, List<TravelItem>> optimize(@RequestBody TravelInput input) {
-        return service.optimizePacking(input.getItems(), input.getMaxWeight());
+        return packingService.optimizePacking(input.getItems(), input.getMaxWeight());
     }
 
     @GetMapping("/defaults")
     public List<TravelItem> getDefaultItems() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        ClassPathResource resource = new ClassPathResource("data/default-items.json");
+        return travelItemService.getTravelItemsByTravelType(1);
 
-        return mapper.readValue(resource.getInputStream(), new TypeReference<>() {
-
-        });
     }
 
 

@@ -49,18 +49,19 @@ public class PackingUtils {
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
                 String[] parts = line.split(",");
-                if (parts.length != 4) {
+                if (parts.length != 5) {
                     System.err.println("Skipping invalid line: " + line);
                     continue;
                 }
 
                 try {
-                    String name = parts[0].trim();
-                    int weight = Integer.parseInt(parts[1].trim());
-                    int value = Integer.parseInt(parts[2].trim());
-                    boolean fragile = Boolean.parseBoolean(parts[3].trim());
+                    int id = Integer.parseInt(parts[0].trim());
+                    String name = parts[1].trim();
+                    int weight = Integer.parseInt(parts[2].trim());
+                    int value = Integer.parseInt(parts[3].trim());
+                    boolean fragile = Boolean.parseBoolean(parts[4].trim());
 
-                    items.add(new TravelItem(name, weight, value, fragile));
+                    items.add(new TravelItem(id,name, weight, value, fragile));
                 } catch (Exception e) {
                     System.err.println("Error parsing line: " + line);
                 }

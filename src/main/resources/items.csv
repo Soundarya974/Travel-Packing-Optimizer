@@ -1,9 +1,9 @@
 MaxWeight,7
-ItemName,Weight,Value,Fragile
-Jacket,3,8,false
-Camera,2,10,true
-Shoes,2,6,false
-Laptop,3,9,true
-T-Shirts,1,3,false
-Toiletry Bag,1,2,false
-Guide Book,1,4,true
+Id,ItemName,Weight,Value,Fragile
+1,Jacket,3,8,false
+2,Camera,2,10,true
+3,Shoes,2,6,false
+4,Laptop,3,9,true
+5,T-Shirts,1,3,false
+6,Toiletry Bag,1,2,false
+7,Guide Book,1,4,true
