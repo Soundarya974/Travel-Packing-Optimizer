@@ -1,4 +1,3 @@
-
 INSERT INTO travel_items (name, weight, importance, is_fragile) VALUES
 ('T-Shirt', 2, 5, false),
 ('Pant', 2, 5, false),
@@ -60,7 +59,7 @@ INSERT INTO item_mappings (travel_type_id, item_id) VALUES
 (4, 16), -- Notebook and Pen for Adventure
 (6, 18), -- Snacks for Family
 (6, 20), -- Medications for Family
-(7, 10)  -- Trekking Shoes for Backpacking
+(7, 10) -- Trekking Shoes for Backpacking
 ;
 
 
@@ -69,5 +68,7 @@ INSERT INTO item_mappings (season_id, item_id) VALUES
 (2, 5), -- Jacket for Winter
 (3, 6), -- Umbrella for Monsoon
 (3, 12), -- Rain coat for Monsoon
-(1, 1) -- T-Shirt for summer
+(1, 1), -- T-Shirt for summer
+(1,21)  -- Sunglasses for Summer
 ;
+

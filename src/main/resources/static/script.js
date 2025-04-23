@@ -1,9 +1,14 @@
-
 let itemIndex = 0;
 
-function addItem(name = "", weight = "", importance = "", isFragile = false) {
+function addItem(id = "", name = "", weight = "", importance = "", isFragile = false) {
     const container = document.getElementById("items");
-    const div = document.createElement("div");
+    let div = document.createElement("div");
+    const elementId = `item-id-${id}`;
+    const existingDiv = document.getElementById(elementId);
+    if(existingDiv){
+        div = existingDiv;
+    }
+    div.id = `item-id-${id}`
     div.innerHTML = `
     <input placeholder="Name" id="name-${itemIndex}" value="${name}" />
     <input type="number" placeholder="Weight" id="weight-${itemIndex}" value="${weight}" />
@@ -18,7 +23,7 @@ async function fetchDefaults() {
     const res = await fetch("/api/items/defaults");
     const items = await res.json();
     items.forEach(item =>
-        addItem(item.name, item.weight, item.importance, item.isFragile)
+        addItem(item.id, item.name, item.weight, item.importance, item.isFragile)
     );
 }
 
@@ -27,10 +32,10 @@ async function fetchOptions(endpoint, selectId) {
     const data = await response.json();
     const select = document.getElementById(selectId);
     data.forEach(item => {
-    const option = document.createElement('option');
-    option.value = item.id;
-    option.textContent = item.name || item.reason;
-    select.appendChild(option);
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.name || item.reason;
+        select.appendChild(option);
     });
 }
 
@@ -43,7 +48,7 @@ async function loadSuggestedItems() {
     );
     const items = await response.json();
     items.forEach(item =>
-        addItem(item.name, item.weight, item.importance, item.isFragile)
+        addItem(item.id, item.name, item.weight, item.importance, item.isFragile)
     );
 }
 
@@ -57,14 +62,14 @@ async function submitData() {
         const importance = parseFloat(document.getElementById(`importance-${i}`)?.value);
         const isFragile = document.getElementById(`isFragile-${i}`)?.checked;
         if (name && !isNaN(weight) && !isNaN(importance)) {
-            items.push({ name, weight, importance, isFragile });
+            items.push({name, weight, importance, isFragile});
         }
     }
 
     const response = await fetch('/api/packing', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ maxWeight, items })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({maxWeight, items})
     });
 
     const result = await response.json();
@@ -82,6 +87,7 @@ function displayResult(result) {
     result.optimal.forEach(item => {
         const row = document.createElement("tr");
         row.innerHTML = `
+            <td>${item.name}</td>
             <td>${item.weight}</td>
             <td>${item.importance}</td>
             <td>${item.isFragile ? "Yes" : "No"}</td>
