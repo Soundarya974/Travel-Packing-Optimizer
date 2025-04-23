@@ -16,7 +16,7 @@ public class KnapsackSolver {
             TravelItem item = items.get(i - 1);
             for (int w = 0; w <= maxWeight; w++) {
                 if (item.getWeight() <= w) {
-                    dp[i][w] = Math.max(dp[i - 1][w], item.getValue() + dp[i - 1][w - item.getWeight()]);
+                    dp[i][w] = Math.max(dp[i - 1][w], item.getImportance() + dp[i - 1][w - item.getWeight()]);
                 } else {
                     dp[i][w] = dp[i - 1][w];
                 }

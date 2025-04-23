@@ -12,16 +12,16 @@ public class TravelItem {
     private int id;
     private String name;
     private int weight;  // in kg
-    private int value;   // utility score
-    private boolean fragile;
+    private int importance;   // utility score
+    private boolean isFragile;
 
 
-    public TravelItem(int id, String name, int weight, int value, boolean fragile) {
+    public TravelItem(int id, String name, int weight, int importance, boolean isFragile) {
         this.id = id;
         this.name = name;
         this.weight = weight;
-        this.value = value;
-        this.fragile = fragile;
+        this.importance = importance;
+        this.isFragile = isFragile;
     }
 
     public TravelItem() {
@@ -40,20 +40,20 @@ public class TravelItem {
         return weight;
     }
 
-    public int getValue() {
-        return value;
+    public int getImportance() {
+        return importance;
     }
 
-    public boolean isFragile() {
-        return fragile;
+    public boolean isIsFragile() {
+        return isFragile;
     }
 
     public double getValueToWeightRatio() {
-        return (double) value / weight;
+        return (double) importance / weight;
     }
 
     @Override
     public String toString() {
-        return name + " (Weight: " + weight + "kg, Value: " + value + ", Fragile: " + fragile + ")";
+        return name + " (Weight: " + weight + "kg, Importance: " + importance + ", IsFragile: " + isFragile + ")";
     }
 }

@@ -81,7 +81,7 @@ public class PackingUtils {
         for (TravelItem item : list) {
             System.out.println(" - " + item);
             totalWeight += item.getWeight();
-            totalValue += item.getValue();
+            totalValue += item.getImportance();
         }
         System.out.println("Total Weight: " + totalWeight + "kg");
         System.out.println("Total Value: " + totalValue);

@@ -1,10 +1,10 @@
 package org.example.service;
 
+import java.util.List;
+
 import org.example.model.TravelItem;
 import org.example.repository.ItemMappingRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TravelItemService {
@@ -22,5 +22,9 @@ public class TravelItemService {
 
     public List<TravelItem> getTravelItemsByTravelType(int travelTypeId) {
         return itemMappingRepository.findItemsByTravelTypeId(travelTypeId);
+    }
+
+    public List<TravelItem> getTravelItemsByTravelTypeAndSeason(int travelTypeId, int seasonId) {
+        return itemMappingRepository.findItemsByTravelTypeIdAndSeasonId(travelTypeId, seasonId);
     }
 }

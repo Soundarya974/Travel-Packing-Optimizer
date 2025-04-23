@@ -7,7 +7,7 @@ public class GreedySolver {
 
     public static List<TravelItem> solveByValue(List<TravelItem> items, int maxWeight) {
         List<TravelItem> sorted = new ArrayList<>(items);
-        sorted.sort((a, b) -> b.getValue() - a.getValue());
+        sorted.sort((a, b) -> b.getImportance() - a.getImportance());
         return greedySelect(sorted, maxWeight);
     }
 

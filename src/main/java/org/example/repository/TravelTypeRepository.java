@@ -1,9 +1,8 @@
 package org.example.repository;
 
-import org.example.model.TravelItem;
 import org.example.model.TravelType;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TravelTypeRepository extends CrudRepository<TravelType, Integer> {
+public interface TravelTypeRepository extends JpaRepository<TravelType, Integer> {
 
 }
