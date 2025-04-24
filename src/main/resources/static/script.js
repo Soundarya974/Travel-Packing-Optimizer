@@ -5,7 +5,7 @@ function addItem(id = "", name = "", weight = "", importance = "", isFragile = f
     let div = document.createElement("div");
     const elementId = `item-id-${id}`;
     const existingDiv = document.getElementById(elementId);
-    if(existingDiv){
+    if (existingDiv) {
         div = existingDiv;
     }
     div.id = `item-id-${id}`
@@ -52,7 +52,7 @@ async function loadSuggestedItems() {
     );
 }
 
-async function submitData() {
+async function findOptimalPacking() {
     const maxWeight = document.getElementById("maxWeight").value;
     const items = [];
 
@@ -66,7 +66,7 @@ async function submitData() {
         }
     }
 
-    const response = await fetch('/api/packing', {
+    const response = await fetch('/api/packing/optimal', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({maxWeight, items})
@@ -76,26 +76,138 @@ async function submitData() {
     displayResult(result);
 }
 
+async function findGreedyPacking() {
+    const maxWeight = document.getElementById("maxWeight").value;
+    const items = [];
+
+    for (let i = 0; i < itemIndex; i++) {
+        const name = document.getElementById(`name-${i}`)?.value;
+        const weight = parseFloat(document.getElementById(`weight-${i}`)?.value);
+        const importance = parseFloat(document.getElementById(`importance-${i}`)?.value);
+        const isFragile = document.getElementById(`isFragile-${i}`)?.checked;
+        if (name && !isNaN(weight) && !isNaN(importance)) {
+            items.push({name, weight, importance, isFragile});
+        }
+    }
+
+    const response = await fetch('/api/packing/greedy/value', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({maxWeight, items})
+    });
+
+    const result = await response.json();
+    displayResult(result);
+}
+
+async function comparePackingApproaches() {
+    const maxWeight = document.getElementById("maxWeight").value;
+    const items = [];
+
+    for (let i = 0; i < itemIndex; i++) {
+        const name = document.getElementById(`name-${i}`)?.value;
+        const weight = parseFloat(document.getElementById(`weight-${i}`)?.value);
+        const importance = parseFloat(document.getElementById(`importance-${i}`)?.value);
+        const isFragile = document.getElementById(`isFragile-${i}`)?.checked;
+        if (name && !isNaN(weight) && !isNaN(importance)) {
+            items.push({name, weight, importance, isFragile});
+        }
+    }
+
+    const response = await fetch('/api/packing/compare', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({maxWeight, items})
+    });
+
+    const result = await response.json();
+    displayComparison(result);
+}
+
+
+function displayComparison(resultMap) {
+    const table = document.getElementById("comparison-table");
+    const tbody = document.getElementById("comparison-body");
+    const outputTable = document.getElementById("output-table");
+    const outputBody = document.getElementById("output-body");
+    const summary = document.getElementById("results-summary");
+    const results = document.getElementById("results");
+
+    // Clear previous results
+    outputBody.innerHTML = "";
+    summary.innerHTML = "";
+    tbody.innerHTML = "";
+    outputTable.style.display = "none";
+    results.style.display = "none";
+
+    for (const [approach, result] of Object.entries(resultMap)) {
+        const totalItems = result.selectedItems.length;
+        const totalWeight = result.totalWeight;
+        const totalImportance = result.totalImportance;
+        const itemNames = result.selectedItems.map(item => item.name).join(", ");
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${approach}</td>
+            <td>${totalItems}</td>
+            <td>${totalWeight}</td>
+            <td>${totalImportance}</td>
+            <td>${itemNames}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    table.style.display = "table";
+}
+
 function displayResult(result) {
+    const comparisionTable = document.getElementById("comparison-table");
+    const comparisionBody = document.getElementById("comparison-body");
     const table = document.getElementById("output-table");
     const tbody = document.getElementById("output-body");
-    const summary = document.getElementById("summary");
+    const summary = document.getElementById("results-summary");
+    const results = document.getElementById("results");
 
     // Clear previous results
     tbody.innerHTML = "";
+    comparisionBody.innerHTML = "";
+    comparisionTable.style.display = "none";
 
-    result.optimal.forEach(item => {
+    result.selectedItems.forEach(item => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.name}</td>
             <td>${item.weight}</td>
             <td>${item.importance}</td>
             <td>${item.isFragile ? "Yes" : "No"}</td>
-    `;
+        `;
         tbody.appendChild(row);
     });
 
+    // Update summary section
+    const totalItems = result.selectedItems.length;
+    const totalWeight = result.totalWeight;
+    const totalImportance = result.totalImportance;
+
+    summary.innerHTML = `
+        <strong>Summary:</strong><br>
+         <div className="result-card">
+            <h4>Total Value</h4>
+            <p id="totalValue">${totalImportance}</p>
+        </div>
+        <div className="result-card">
+            <h4>Total Weight</h4>
+            <p id="totalWeight">${totalWeight} kg</p>
+        </div>
+        <div className="result-card">
+            <h4>Items Selected</h4>
+            <p id="itemsCount">${totalItems}</p>
+        </div>
+    `;
+
     table.style.display = "table";
+    summary.style.display = "block";
+    results.style.display = "block";
 }
 
 window.onload = () => {

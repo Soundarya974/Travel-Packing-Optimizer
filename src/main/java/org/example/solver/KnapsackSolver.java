@@ -1,13 +1,13 @@
 package org.example.solver;
 
-
 import org.example.model.TravelItem;
+import org.example.model.PackingResult;
 
 import java.util.*;
 
 public class KnapsackSolver {
 
-    public static List<TravelItem> solve(List<TravelItem> items, int maxWeight) {
+    public static PackingResult solve(List<TravelItem> items, int maxWeight) {
         int n = items.size();
         int[][] dp = new int[n + 1][maxWeight + 1];
 
@@ -24,16 +24,21 @@ public class KnapsackSolver {
         }
 
         // Backtrack to find solution
-        List<TravelItem> result = new ArrayList<>();
+        List<TravelItem> travelItems = new ArrayList<>();
+        int totalWeight = 0;
+        int totalImportance = 0;
         int w = maxWeight;
+
         for (int i = n; i > 0 && w > 0; i--) {
             if (dp[i][w] != dp[i - 1][w]) {
                 TravelItem item = items.get(i - 1);
-                result.add(item);
+                travelItems.add(item);
+                totalWeight += item.getWeight();
+                totalImportance += item.getImportance();
                 w -= item.getWeight();
             }
         }
 
-        return result;
+        return new PackingResult(travelItems, totalWeight, totalImportance);
     }
 }

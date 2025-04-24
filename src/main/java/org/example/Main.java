@@ -25,7 +25,7 @@ public class Main {
         List<TravelItem> items = input.items;
 
         var optimal = KnapsackSolver.solve(items, maxWeight);
-        PackingUtils.printPackingList("Optimal Packing (DP)", optimal);
+        PackingUtils.printPackingList("Optimal Packing (DP)", optimal.getSelectedItems());
 
     }
 }

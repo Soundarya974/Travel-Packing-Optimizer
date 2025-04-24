@@ -13,7 +13,7 @@
 
     <label>
         Max Weight:
-        <input id="maxWeight" type="number" value="7">
+        <input id="maxWeight" type="number" value="10">
     </label>
 
     <div id="items"></div>
@@ -35,10 +35,28 @@
     </div>
 
     <button onclick="loadSuggestedItems()">Load Suggested Items</button>
-    <button onclick="submitData()">Optimize</button>
+    <button onclick="findOptimalPacking()">Knapsack Approach</button>
+    <button onclick="findGreedyPacking()">Greedy Approach</button>
+    <button onclick="comparePackingApproaches()">Compare Approaches</button>
+
+    <table id="comparison-table" border="1" style="width:100%; margin-top: 20px; display: none;">
+        <thead>
+        <tr>
+            <th>Approach</th>
+            <th>Total Items</th>
+            <th>Total Weight</th>
+            <th>Total Importance</th>
+            <th>Selected Items</th>
+        </tr>
+        </thead>
+        <tbody id="comparison-body"></tbody>
+    </table>
 
 
-    <h2>Result</h2>
+    <div id="results" style="display: none">
+    <h3>Optimization Results</h3>
+    <div id="results-summary" style="display:none; margin-top: 10px;"></div>
+
     <div id="output-container">
         <table id="output-table" style="display: none;">
             <thead>
@@ -53,7 +71,7 @@
         </table>
         <div id="summary" style="margin-top: 1rem;"></div>
     </div>
-
+    </div>
 </div>
 
 <script src="script.js"></script>
